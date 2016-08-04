@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Adam Panzer"]
   spec.email         = ["apanzer@zendesk.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Enforce gemfile dependencies by breaking shit.}
+  spec.description   = %q{Make sure that your brakeman gem (or other gem) is always on the latest version.}
+  spec.homepage      = "https://github.com/zendesk/brakecheck"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.12"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_runtime_dependency "faraday"
 end
