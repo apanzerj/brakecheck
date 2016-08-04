@@ -2,18 +2,29 @@ require 'spec_helper'
 
 describe Brakecheck do
   include Brakecheck
+  let(:version_string) { "1.0.0" }
+  let(:version) do
+    version = double(:version)
+    expect(version).to receive(:version).and_return(version_string)
+    version
+  end
+
+  before do
+    stub_request(:get, "https://rubygems.org/api/v1/versions/foo/latest.json").
+      to_return(status: 200, body: %q{{"version": "1.0.0"}}, headers: {'Content-Type' => 'application/json'})
+    expect(Gem).to receive(:loaded_specs).and_return({'foo' => version})
+  end
 
   describe 'when the gem is in the current bundle' do
-    before do
-      stub_request(:get, "https://rubygems.org/api/v1/versions/foo/latest.json").
-        to_return(status: 200, body: %q{{"version": "1.0.0"}}, headers: {'Content-Type' => 'application/json'})
-      version = double(:version)
-      expect(version).to receive(:version).and_return('1.0.0')
-      expect(Gem).to receive(:loaded_specs).and_return({'foo' => version})
-    end
-
     it 'passes' do
       expect_latest('foo', loaded_specs('foo'))
+    end
+  end
+
+  describe 'when the gem is not in the current bundle' do
+    let(:version_string) { '1.1.0' }
+    it 'fails' do
+      expect{ expect_latest('foo', loaded_specs('foo')) }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
   end
 end
