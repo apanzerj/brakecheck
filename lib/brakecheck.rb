@@ -23,6 +23,10 @@ module Brakecheck
     assert version.to_s == Core.latest(gem_name).to_s, "#{gem_name} expected to be #{Core.latest(gem_name)} but was #{version}"
   end
 
+  def expect_latest(gem_name, version)
+    expect(version.to_s).to eq(Core.latest(gem_name).to_s)
+  end
+
   def loaded_specs(gem_name)
     gem_here = Gem.loaded_specs[gem_name]
     gem_here.nil? ? :not_in_bundle : gem_here.version.to_s
