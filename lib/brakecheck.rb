@@ -19,12 +19,13 @@ module Brakecheck
     end
   end
 
-  def assert_latest(gem_name, version)
-    assert version.to_s == Core.latest(gem_name).to_s, "#{gem_name} expected to be #{Core.latest(gem_name)} but was #{version}"
+  def assert_latest(gem_name)
+    version = loaded_specs(gem_name)
+    assert version == Core.latest(gem_name).to_s, "#{gem_name} expected to be #{Core.latest(gem_name)} but was #{version}"
   end
 
-  def expect_latest(gem_name, version)
-    expect(version.to_s).to eq(Core.latest(gem_name).to_s)
+  def expect_latest(gem_name)
+    expect(loaded_specs(gem_name)).to eq(Core.latest(gem_name).to_s)
   end
 
   def loaded_specs(gem_name)

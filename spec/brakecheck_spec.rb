@@ -20,13 +20,13 @@ describe Brakecheck do
 
   describe 'when the gem is in the current bundle' do
     it 'passes' do
-      expect_latest('foo', loaded_specs('foo'))
+      expect_latest 'foo'
     end
   end
 
   describe 'when the gem is not in the current bundle' do
     it 'fails' do
-      expect{ expect_latest('bar', loaded_specs('bar')) }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
+      expect{ expect_latest('bar') }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
 
     it 'says it is not in the bundle' do
@@ -38,7 +38,7 @@ describe Brakecheck do
     let(:version_string) { '0.0.9' }
 
     it 'fails' do
-      expect{ expect_latest('foo', loaded_specs('foo')) }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
+      expect{ expect_latest('foo') }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
   end
 end

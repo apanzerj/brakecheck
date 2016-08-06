@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Adam Panzer"]
   spec.email         = ["apanzer@zendesk.com"]
 
-  spec.summary       = %q{Enforce gemfile dependencies by breaking shit.}
+  spec.summary       = %q{Enforce gemfile dependencies by breaking stuff.}
   spec.description   = %q{Make sure that your brakeman gem (or other gem) is always on the latest version.}
   spec.homepage      = "https://github.com/zendesk/brakecheck"
   spec.license       = "MIT"
