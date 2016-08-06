@@ -1,8 +1,10 @@
 # Brakecheck
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/brakecheck`. To experiment with that code, run `bin/console` for an interactive prompt.
+A simple gem that makes it easy to have test breakage when important gems are stale.
 
-TODO: Delete this and the text above, and describe your gem
+## Why?!? What's wrong with Bundler?
+
+We use brakeman regularly and it's important to keep that up to date. This breaks the build if brakeman is not current. Bundler still requires that somebody run bundle update.
 
 ## Installation
 
@@ -22,7 +24,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+1. Create a basic test
+2. `include Brakecheck`
+3. assert_latest or expect_latest
+
+__NB: This gem uses rubygems.com API to determine the latest version.__
+
+## TODO
+
+Webmock auto allow rubygems queries.
 
 ## Development
 
