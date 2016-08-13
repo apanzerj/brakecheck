@@ -10,16 +10,14 @@ describe Brakecheck do
   let(:load_spec) { double(:foo) }
 
   before do
-    stub_request(:get, "https://rubygems.org/api/v1/versions/brakeman/latest.json").
-      to_return(status: 200, body: %q{{"version": "1.0.0"}}, headers: {'Content-Type' => 'application/json'})
-    stub_request(:get, "https://rubygems.org/api/v1/versions/foo/latest.json").
-      to_return(status: 200, body: %q{{"version": "1.1.0"}}, headers: {'Content-Type' => 'application/json'})
+    stub_gem_request("brakeman", "1.1.0")
+    stub_gem_request("foo", "1.1.0")
     expect(Bundler).to receive(:load).and_return(load_spec)
     expect(load_spec).to receive(:specs).and_return(specs)
   end
 
   describe 'when the gem is in the current bundle' do
-    let(:version) { "1.0.0" }
+    let(:version) { "1.1.0" }
 
     it 'passes' do
       expect_latest 'brakeman'
@@ -46,7 +44,7 @@ describe Brakecheck do
 
   describe 'rspec_matcher' do
     describe 'when it is the latest version' do
-      let(:version) { "1.0.0" }
+      let(:version) { "1.1.0" }
 
       it{ expect('brakeman').to be_the_latest_version }
     end
