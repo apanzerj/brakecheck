@@ -19,6 +19,16 @@ module Brakecheck
     end
   end
 
+  module Rspec
+    require 'rspec/expectations'
+
+    RSpec::Matchers.define :be_the_latest_version do
+      match do |gem_name|
+        Brakecheck::Core.latest(gem_name) == loaded_specs(gem_name)
+      end
+    end
+  end
+
   def assert_latest(gem_name)
     version = loaded_specs(gem_name)
     assert version == Core.latest(gem_name).to_s, "#{gem_name} expected to be #{Core.latest(gem_name)} but was #{version}"
@@ -29,7 +39,9 @@ module Brakecheck
   end
 
   def loaded_specs(gem_name)
-    gem_here = Gem.loaded_specs[gem_name]
+    gem_here = Bundler.load.specs.detect do |specs|
+      specs.name == gem_name
+    end
     gem_here.nil? ? :not_in_bundle : gem_here.version.to_s
   end
 end
