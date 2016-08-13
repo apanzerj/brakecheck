@@ -28,6 +28,13 @@ Or install it yourself as:
 2. `include Brakecheck`
 3. assert_latest or expect_latest
 
+Rspec Matcher exampe:
+
+ ```ruby
+ expect('brakeman').to be_the_latest_version
+ ```
+ 
+
 __NB: This gem uses rubygems.com API to determine the latest version.__
 
 ## TODO
