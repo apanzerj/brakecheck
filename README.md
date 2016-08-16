@@ -1,6 +1,6 @@
 # Brakecheck
 
-A simple gem that makes it easy to have test breakage when important gems are stale.
+Test breakage when important gems are stale.
 
 ## Why?!? What's wrong with Bundler?
 
@@ -56,3 +56,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
+
+## Grosser Says
+    > “A simple gem that makes it easy to have” == bla bla
+    @grosser
