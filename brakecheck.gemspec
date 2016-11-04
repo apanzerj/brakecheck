@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Enforce gemfile dependencies by breaking stuff.}
   spec.description   = %q{Make sure that your brakeman gem (or other gem) is always on the latest version.}
-  spec.homepage      = "https://github.com/zendesk/brakecheck"
+  spec.homepage      = "https://github.com/apanzerj/brakecheck"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
