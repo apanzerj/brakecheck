@@ -16,12 +16,10 @@ describe Brakecheck do
   end
 
   describe 'when the gem is not in the current bundle' do
-    it 'fails' do
-      expect{ expect('darkside').to be_the_latest_version }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
-    end
+    subject{ expect('darkside').to be_the_latest_version }
 
-    it 'says it is not in the bundle' do
-      expect(loaded_specs('darkside')).to match(:not_in_bundle)
+    it 'fails' do
+      expect{ subject }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
   end
 
