@@ -32,7 +32,7 @@ module Brakecheck
         end
       end
 
-      failure_message_for_should do |actual|
+      failure_message do |actual|
         if actual == :not_in_bundle
           "that gem is not in the bundle"
         else
