@@ -40,17 +40,17 @@ module Brakecheck
         end
       end
     end
-  end
 
-  def loaded_specs(gem_name)
-    gem_here = specs.detect do |specs|
-      specs.name == gem_name
+    def loaded_specs(gem_name)
+      gem_here = specs.detect do |specs|
+        specs.name == gem_name
+      end
+
+      gem_here.nil? ? :not_in_bundle : gem_here.version.to_s
     end
 
-    gem_here.nil? ? :not_in_bundle : gem_here.version.to_s
-  end
-
-  def specs
-    @specs ||= Bundler::LockfileParser.new(Bundler.read_file(Bundler.default_lockfile)).specs
+    def specs
+      @specs ||= Bundler::LockfileParser.new(Bundler.read_file(Bundler.default_lockfile)).specs
+    end
   end
 end
