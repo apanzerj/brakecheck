@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'minitest/autorun'
 
 describe Brakecheck do
   include Brakecheck
@@ -41,12 +40,6 @@ describe Brakecheck do
       it 'raises an error' do
         expect{ expect('brakeman').to be_the_latest_version }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
-    end
-  end
-
-  describe 'minitest' do
-    it 'foo' do
-      "brakeman".must_be_latest_version
     end
   end
 end

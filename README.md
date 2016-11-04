@@ -26,14 +26,8 @@ Or install it yourself as:
 
 1. Create a basic test
 2. `include Brakecheck`
-3. assert_latest or expect_latest
+3. expect(gem_name).to be_the_latest_version
 
-Rspec Matcher exampe:
-
- ```ruby
- expect('brakeman').to be_the_latest_version
- ```
- 
 
 __NB: This gem uses rubygems.com API to determine the latest version.__
 
@@ -49,7 +43,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/brakecheck.
+Bug reports and pull requests are welcome on GitHub at https://github.com/apanzerj/brakecheck.
 
 
 ## License
