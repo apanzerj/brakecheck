@@ -24,24 +24,33 @@ module Brakecheck
 
     RSpec::Matchers.define :be_the_latest_version do
       match do |gem_name|
-        Brakecheck::Core.latest(gem_name) == loaded_specs(gem_name)
+        spec_from_file = loaded_specs(gem_name)
+        if spec_from_file == :not_in_bundle
+          return false
+        else
+          Brakecheck::Core.latest(gem_name) == loaded_specs(gem_name)
+        end
+      end
+
+      failure_message_for_should do |actual|
+        if actual == :not_in_bundle
+          "that gem is not in the bundle"
+        else
+          "expected gem to be #{expected} but was actually #{actual}."
+        end
       end
     end
   end
 
-  def assert_latest(gem_name)
-    version = loaded_specs(gem_name)
-    assert version == Core.latest(gem_name).to_s, "#{gem_name} expected to be #{Core.latest(gem_name)} but was #{version}"
-  end
-
-  def expect_latest(gem_name)
-    expect(loaded_specs(gem_name)).to eq(Core.latest(gem_name).to_s)
-  end
-
   def loaded_specs(gem_name)
-    gem_here = Bundler.load.specs.detect do |specs|
+    gem_here = specs.detect do |specs|
       specs.name == gem_name
     end
+
     gem_here.nil? ? :not_in_bundle : gem_here.version.to_s
+  end
+
+  def specs
+    @specs ||= Bundler::LockfileParser.new(Bundler.read_file(Bundler.default_lockfile)).specs
   end
 end
