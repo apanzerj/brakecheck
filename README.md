@@ -28,6 +28,25 @@ Or install it yourself as:
 2. `include Brakecheck`
 3. expect(gem_name).to be_the_latest_version
 
+Full example:
+
+```ruby
+require 'brakecheck'
+
+describe "Brakeman" do
+  before do
+    WebMock.allow_net_connect!
+  end
+
+  it "is up to date" do
+    expect("brakeman").to be_the_latest_version
+  end
+
+  after do
+    WebMock.disable_net_connect!
+  end
+end
+```
 
 __NB: This gem uses rubygems.com API to determine the latest version.__
 
@@ -49,7 +68,6 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/apanze
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
 
 
 > “A simple gem that makes it easy to have” == bla bla
