@@ -6,7 +6,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    brakeman (3.4.1)
+    brakeman (3.4.0)
     footing (1.0.2)
     rake (10.5.0)
 
