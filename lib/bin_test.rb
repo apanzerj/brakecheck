@@ -1,7 +1,7 @@
 require "brakecheck"
 RSpec.describe ENV['BRAKECHECK_GEM'] do
   before do
-    WebMock.disable_net_connect!(allow: 'rubygems.org')
+    WebMock.disable_net_connect!(allow: 'rubygems.org') if defined? WebMock
   end
 
   it 'is the lastest version' do
