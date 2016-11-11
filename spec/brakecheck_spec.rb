@@ -4,9 +4,8 @@ describe Brakecheck do
   include Brakecheck
 
   before do
-    expect(Bundler).to receive(:default_lockfile).and_return(File.join(Bundler.root, "spec", "test_gem.lock"))
-    stub_gem_request("footing", "1.0.2") # up to date
-    stub_gem_request("brakeman", "3.0.0") # outdated spec
+    expect(Bundler).to receive(:default_lockfile).at_least(1).times
+      .and_return(File.join(Bundler.root, "spec", "test_gem.lock"))
   end
 
   describe 'when the gem is current and in the bundle' do

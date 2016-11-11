@@ -25,18 +25,14 @@ module Brakecheck
     RSpec::Matchers.define :be_the_latest_version do
       match do |gem_name|
         spec_from_file = loaded_specs(gem_name)
-        if spec_from_file == :not_in_bundle
-          return false
-        else
-          Brakecheck::Core.latest(gem_name) == loaded_specs(gem_name)
-        end
+        Brakecheck::Core.latest(gem_name) == spec_from_file
       end
 
-      failure_message do |actual|
-        if actual == :not_in_bundle
+      failure_message do |gem_name|
+        if loaded_specs(gem_name) == :not_in_bundle
           "that gem is not in the bundle"
         else
-          "expected gem to be #{expected} but was actually #{actual}."
+          "expected #{gem_name} to be #{Brakecheck::Core.latest(gem_name)} but was actually #{loaded_specs(gem_name)}."
         end
       end
 

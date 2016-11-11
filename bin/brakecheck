@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require 'rspec'
+RSpec::Core::Runner.run([File.join(__FILE__, "..", "..", "lib", "bin_test.rb")])
