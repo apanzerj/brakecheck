@@ -32,6 +32,7 @@ module Brakecheck
   end
 
   module TestUnit
+    require 'test/unit'
     require 'test/unit/assertions'
 
 
@@ -53,10 +54,10 @@ module Brakecheck
       end
 
       failure_message do |gem_name|
-        if loaded_specs(gem_name) == :not_in_bundle
+        if Brakecheck::Core.loaded_specs(gem_name) == :not_in_bundle
           "that gem is not in the bundle"
         else
-          "expected #{gem_name} to be #{Brakecheck::Core.latest(gem_name)} but was actually #{loaded_specs(gem_name)}."
+          "expected #{gem_name} to be #{Brakecheck::Core.latest(gem_name)} but was actually #{Brakecheck::Core.loaded_specs(gem_name)}."
         end
       end
     end
