@@ -4,7 +4,7 @@ describe Brakecheck do
   include Brakecheck
 
   before do
-    expect(Bundler).to receive(:default_lockfile).at_least(1).times
+    allow(Bundler).to receive(:default_lockfile).at_least(1).times
       .and_return(File.join(Bundler.root, "spec", "test_gem.lock"))
   end
 
