@@ -1,5 +1,3 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'brakecheck'
+require 'bundler/setup'
+require 'brakecheck/rspec'
 require 'webmock/rspec'
-
-WebMock.disable_net_connect!(allow: 'rubygems.org')
