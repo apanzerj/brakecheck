@@ -8,7 +8,7 @@ describe 'CLI' do
   end
 
   it "passes when the gem is current and in the bundle" do
-    expect(sh("brakecheck webmock")).to eq("Latest webmock 2.3.0 installed\n")
+    expect(sh("brakecheck webmock")).to eq("Latest webmock 2.3.1 installed\n")
   end
 
   it "fails when the gem is not found in Gemfile.lock" do
