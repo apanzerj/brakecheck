@@ -1,37 +1,39 @@
 # Brakecheck
 
-Test breakage when important gems are stale.
-
-## Why?!? What's wrong with Bundler?
-
-We use brakeman regularly and it's important to keep that up to date. This breaks the build if brakeman is not current. Bundler still requires that somebody run bundle update.
+Test breakage when important gems are stale, to always have the latest versions of rubocop/brakeman/bundler-audit etc.
 
 ## Installation
 
-Add this line to your application's Gemfile:
 
 ```ruby
-gem 'brakecheck'
+# Gemfile
+gem 'brakecheck', group: :test, require: false
 ```
 
 And then execute:
 
-    $ bundle
+```
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install brakecheck
+```
+gem install brakecheck
+```
 
 ## Usage
 
-1. Create a basic test
-2. `include Brakecheck`
-3. expect(gem_name).to be_the_latest_version
+### CLI
 
-Full example:
+```
+brakecheck rubocop
+```
+
+### RSpec
 
 ```ruby
-require 'brakecheck'
+require 'brakecheck/rspec'
 
 describe "Brakeman" do
   before do

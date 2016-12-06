@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
+require 'brakecheck'
+abort "Need gem name as only argument" unless ARGV.size == 1
+gem_name = ARGV[0]
 
-require "bundler/setup"
-require 'rspec'
-RSpec::Core::Runner.run([File.join(__FILE__, "..", "..", "lib", "bin_test.rb")])
+success, message = Brakecheck::Core.compare(gem_name)
+if success
+  puts message
+else
+  abort message
+end

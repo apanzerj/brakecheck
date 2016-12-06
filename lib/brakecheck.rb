@@ -1,51 +1,32 @@
 require "brakecheck/version"
-require "faraday"
-require "faraday_middleware"
+require "open-uri"
+require "bundler"
 
 module Brakecheck
   class Core
-    attr_reader :client
+    RUBYGEMS_HOST = "https://rubygems.org"
+    LOCK = Bundler.default_lockfile
 
     def self.latest(gem_name)
-      new.client.get("#{gem_name}/latest.json").body['version']
+      open("#{RUBYGEMS_HOST}/api/v1/versions/#{gem_name}/latest.json").read[/"version":"(.+?)"/, 1]
+    rescue StandardError
+      nil
     end
 
-    def client
-      @client = Faraday.new(:url => "https://rubygems.org/api/v1/versions") do |faraday|
-        faraday.request       :url_encoded
-        faraday.adapter       Faraday.default_adapter
-        faraday.use           FaradayMiddleware::ParseJson
-      end
+    def self.local(gem_name)
+      lock = Bundler::LockfileParser.new(Bundler.read_file(LOCK))
+      return unless spec = lock.specs.detect { |s| s.name == gem_name }
+      spec.version.to_s
     end
-  end
 
-  module Rspec
-    require 'rspec/expectations'
+    def self.compare(gem_name)
+      return [false, "#{gem_name} not found in #{LOCK.basename}"] unless local = local(gem_name)
+      return [false, "#{gem_name} not found on #{RUBYGEMS_HOST}"] unless latest = latest(gem_name)
 
-    RSpec::Matchers.define :be_the_latest_version do
-      match do |gem_name|
-        spec_from_file = loaded_specs(gem_name)
-        Brakecheck::Core.latest(gem_name) == spec_from_file
-      end
-
-      failure_message do |gem_name|
-        if loaded_specs(gem_name) == :not_in_bundle
-          "that gem is not in the bundle"
-        else
-          "expected #{gem_name} to be #{Brakecheck::Core.latest(gem_name)} but was actually #{loaded_specs(gem_name)}."
-        end
-      end
-
-      def loaded_specs(gem_name)
-        gem_here = specs.detect do |specs|
-          specs.name == gem_name
-        end
-
-        gem_here.nil? ? :not_in_bundle : gem_here.version.to_s
-      end
-
-      def specs
-        @specs ||= Bundler::LockfileParser.new(Bundler.read_file(Bundler.default_lockfile)).specs
+      if latest == local
+        [true, "Latest #{gem_name} #{latest} installed"]
+      else
+        [false, "Local version #{local} of #{gem_name} is not the latest version #{latest}"]
       end
     end
   end
