@@ -30,10 +30,10 @@ gem install brakecheck
 brakecheck rubocop
 ```
 
-### RSpec
+### Test
 
 ```ruby
-require 'brakecheck/rspec'
+require 'brakecheck'
 
 describe "Brakeman" do
   before do
@@ -41,7 +41,7 @@ describe "Brakeman" do
   end
 
   it "is up to date" do
-    expect("brakeman").to be_the_latest_version
+    expect(Brakecheck.compare('brakeman')).to include(true)
   end
 
   after do

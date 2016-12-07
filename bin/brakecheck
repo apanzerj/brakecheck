@@ -3,7 +3,7 @@ require 'brakecheck'
 abort "Need gem name as only argument" unless ARGV.size == 1
 gem_name = ARGV[0]
 
-success, message = Brakecheck::Core.compare(gem_name)
+success, message = Brakecheck.compare(gem_name)
 if success
   puts message
 else
