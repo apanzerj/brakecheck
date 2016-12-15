@@ -1,5 +1,4 @@
 require "brakecheck/version"
-require "open-uri"
 require "bundler"
 
 module Brakecheck
@@ -7,15 +6,13 @@ module Brakecheck
   LOCK = Bundler.default_lockfile
 
   def self.latest(gem_name)
-    open("#{RUBYGEMS_HOST}/api/v1/versions/#{gem_name}/latest.json").read[/"version":"(.+?)"/, 1]
-  rescue StandardError
-    nil
+    Gem.latest_version_for(gem_name)
   end
 
   def self.local(gem_name)
     lock = Bundler::LockfileParser.new(Bundler.read_file(LOCK))
     return unless spec = lock.specs.detect { |s| s.name == gem_name }
-    spec.version.to_s
+    spec.version
   end
 
   def self.compare(gem_name)
