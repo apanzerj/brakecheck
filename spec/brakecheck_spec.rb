@@ -9,14 +9,12 @@ describe Brakecheck do
     end
 
     it "passes when on the latest version" do
-      stub_request(:get, "https://rubygems.org/api/v1/versions/rake/latest.json").
-        to_return(body: '"{"version":"10.5.0"}"')
+      expect(Gem).to receive(:latest_version_for).and_return(Gem::Version.new('10.5.0'))
       expect(Brakecheck.compare("rake")).to eq([true, "Latest rake 10.5.0 installed"])
     end
 
     it "fails when not on the latest version" do
-      stub_request(:get, "https://rubygems.org/api/v1/versions/rake/latest.json").
-        to_return(body: '"{"version":"10.6.0"}"')
+      expect(Gem).to receive(:latest_version_for).and_return(Gem::Version.new('10.6.0'))
       expect(Brakecheck.compare("rake")).to eq([false, "Local version 10.5.0 of rake is not the latest version 10.6.0"])
     end
 
@@ -25,8 +23,7 @@ describe Brakecheck do
     end
 
     it "fails when gem is not on rubygems" do
-      stub_request(:get, "https://rubygems.org/api/v1/versions/rake/latest.json").
-        to_return(status: 404)
+      expect(Gem).to receive(:latest_version_for).and_return(nil)
       expect(Brakecheck.compare("rake")).to eq([false, "rake not found on https://rubygems.org"])
     end
   end
